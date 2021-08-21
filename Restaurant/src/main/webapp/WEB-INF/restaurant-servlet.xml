@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+
+	<context:component-scan base-package="com.sharobi.restaurantapp" />
+	<mvc:annotation-driven />
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	        <!-- <property name="maxUploadSize" value="250000"/> -->
+	        <property name="maxUploadSize" value="1048576"/>
+	</bean>
+
+	<mvc:cors>
+		<mvc:mapping path="/**" />
+	</mvc:cors>
+
+	<!-- 
+	<bean id="inventoryType" class="com.sharobi.restaurantapp.model.InventoryType" />
+	<bean id="inventoryVendor" class="com.sharobi.restaurantapp.model.InventoryVendor" />
+	<bean id="inventoryItems" class="com.sharobi.restaurantapp.model.InventoryItems">
+		<property name="inventoryType" ref="inventoryType"></property>
+	</bean>
+	<bean id="newInventoryItems" class="com.sharobi.restaurantapp.model.InventoryItems">
+		<property name="inventoryType" ref="inventoryType"></property>
+	</bean>
+	<bean id="customer" class="com.sharobi.restaurantapp.model.Customer" />
+	<bean id="menuCategory" class="com.sharobi.restaurantapp.model.MenuCategory">
+		<property name="menutype" ref="menutype"></property>
+
+	</bean>
+	<bean id="menutype" class="com.sharobi.restaurantapp.model.MenuCategory" />
+	<bean id="user" class="com.sharobi.restaurantapp.model.User">
+		<property name="restMaster" ref="restaurantMaster"></property>
+	</bean>
+
+	<bean id="tabletUser" class="com.sharobi.restaurantapp.model.Customer" />
+
+	<bean id="feedback" class="com.sharobi.restaurantapp.model.Feedback" />
+	<bean id="order" class="com.sharobi.restaurantapp.model.OrderMaster">
+		<property name="orderItem1" ref="orderItem1"></property>
+		<property name="orderItem2" ref="orderItem2"></property>
+		<property name="orderItem3" ref="orderItem3"></property>
+		<property name="orderItem4" ref="orderItem4"></property>
+		<property name="orderItem5" ref="orderItem5"></property>
+		<property name="ordertype" ref="orderType"></property>
+		<property name="paymentType" ref="paymentType"></property>
+
+	</bean>
+	<bean id="orderItem1" class="com.sharobi.restaurantapp.model.OrderItem">
+		<property name="item" ref="item1"></property>
+	</bean>
+	<bean id="orderItem2" class="com.sharobi.restaurantapp.model.OrderItem">
+		<property name="item" ref="item2"></property>
+	</bean>
+	<bean id="orderItem3" class="com.sharobi.restaurantapp.model.OrderItem">
+		<property name="item" ref="item3"></property>
+	</bean>
+	<bean id="orderItem4" class="com.sharobi.restaurantapp.model.OrderItem">
+		<property name="item" ref="item4"></property>
+	</bean>
+	<bean id="orderItem5" class="com.sharobi.restaurantapp.model.OrderItem">
+		<property name="item" ref="item5"></property>
+	</bean>
+	<bean id="item1" class="com.sharobi.restaurantapp.model.MenuItem" />
+	<bean id="item2" class="com.sharobi.restaurantapp.model.MenuItem" />
+	<bean id="item3" class="com.sharobi.restaurantapp.model.MenuItem" />
+	<bean id="item4" class="com.sharobi.restaurantapp.model.MenuItem" />
+	<bean id="item5" class="com.sharobi.restaurantapp.model.MenuItem" />
+	<bean id="fromOrder" class="com.sharobi.restaurantapp.model.OrderMaster" />
+	<bean id="toOrder" class="com.sharobi.restaurantapp.model.OrderMaster" />
+	<bean id="item" class="com.sharobi.restaurantapp.model.MenuItem" />
+	<bean id="orderItem" class="com.sharobi.restaurantapp.model.OrderItem" />
+	<bean id="orderType" class="com.sharobi.restaurantapp.model.OrderType" />
+	<bean id="paymentType" class="com.sharobi.restaurantapp.model.PaymentType" />
+	<bean id="storeLocator" class="com.sharobi.restaurantapp.model.StoreLocator" />
+	<bean id="restaurantMaster" class="com.sharobi.restaurantapp.model.RestaurantMaster" />
+	<bean id="storeMaster" class="com.sharobi.restaurantapp.model.StoreMaster" />
+
+	<bean id="daySpecial" class="com.sharobi.restaurantapp.model.DaySpecial">
+		<property name="item" ref="item"></property>
+
+	</bean>
+	<bean id="menuItem" class="com.sharobi.restaurantapp.model.MenuItem">
+		<property name="menucategory" ref="menuCategory"></property>
+
+	</bean>
+
+
+	<bean id="loginDAO" class="com.sharobi.restaurantapp.dao.LoginDAOImpl" />
+
+	<bean id="custDAO" class="com.sharobi.restaurantapp.dao.CustomerDAOImpl" />
+
+	<bean id="menuDAO" class="com.sharobi.restaurantapp.dao.MenuDAOImpl" />
+
+	<bean id="licenseDAO" class="com.sharobi.restaurantapp.dao.LicenseDAOImpl" />
+
+	<bean id="specialsDAO" class="com.sharobi.restaurantapp.dao.SpecialsDAOImpl" />
+
+	<bean id="billingDAO" class="com.sharobi.restaurantapp.dao.BillingDAOImpl" />
+	
+	<bean id="maintenenceJobDAO" class="com.sharobi.restaurantapp.dao.MaintenenceJobDAOImpl" />
+
+	<bean id="menuDAO" class="com.sharobi.restaurantapp.dao.MenuDAOImpl">
+
+	<bean id="userDAO" class="com.sharobi.restaurantapp.dao.UserDAOImpl" />
+
+	<bean id="feedbackDAO" class="com.sharobi.restaurantapp.dao.FeedbackDAOImpl" />
+	
+	<bean id="inventoryDAO" class="com.sharobi.restaurantapp.dao.InventoryDAOImpl" />
+
+	<bean id="humanResourceDAO" class="com.sharobi.restaurantapp.dao.HumanResourceDAOImpl" />
+
+	<bean id="recipeManagementDAO" class="com.sharobi.restaurantapp.dao.RecipeManagementDAOImpl" />
+
+	<bean id="ordersDAO" class="com.sharobi.restaurantapp.dao.OrdersDAOImpl">
+		<property name="userDAO" ref="userDAO"></property>
+	</bean>
+
+	<bean id="storeAddressDAO" class="com.sharobi.restaurantapp.dao.StoreAddressDAOImpl" />
+
+	<bean id="accountDAO" class="com.sharobi.restaurantapp.dao.AccountDAOImpl" />
+
+	<bean id="loginService" class="com.sharobi.restaurantapp.service.LoginService">
+		<property name="loginDAO" ref="loginDAO"></property>
+	</bean>
+
+	<bean id="customerService" class="com.sharobi.restaurantapp.service.CustomerService">
+		<property name="customerDAO" ref="custDAO"></property>
+	</bean>
+
+	<bean id="menuService" class="com.sharobi.restaurantapp.service.MenuService">
+		<property name="menuDAO" ref="menuDAO"></property>
+	</bean>
+
+	<bean id="licenseService" class="com.sharobi.restaurantapp.service.LicenseService">
+		<property name="licenseDAO" ref="licenseDAO"></property>
+	</bean>
+
+	<bean id="specialService" class="com.sharobi.restaurantapp.service.SpecialService">
+		<property name="specialsDAO" ref="specialsDAO"></property>
+	</bean>
+
+	<bean id="userService" class="com.sharobi.restaurantapp.service.UserService">
+		<property name="userDAO" ref="userDAO"></property>
+	</bean>
+
+	<bean id="feedbackService" class="com.sharobi.restaurantapp.service.FeedbackService">
+		<property name="feedbackDAO" ref="feedbackDAO"></property>
+	</bean>
+
+	<bean id="inventoryService" class="com.sharobi.restaurantapp.service.InventoryService">
+		<property name="inventoryDAO" ref="inventoryDAO"></property>
+	</bean>
+	
+	<bean id="humanResourceService" class="com.sharobi.restaurantapp.service.HumanResourceService">
+		<property name="humanResourceDAO" ref="humanResourceDAO"></property>
+	</bean>
+
+	<bean id="recipeManagementService"
+		class="com.sharobi.restaurantapp.service.RecipeManagementService">
+		<property name="recipeManagementDAO" ref="recipeManagementDAO"></property>
+	</bean>
+
+	<bean id="orderService" class="com.sharobi.restaurantapp.service.OrderService">
+		<property name="ordersDAO" ref="ordersDAO"></property>
+	</bean>
+
+	<bean id="accountService" class="com.sharobi.restaurantapp.service.AccountService">
+		<property name="accountDAO" ref="accountDAO"></property>
+	</bean>
+
+	<bean id="billingService" class="com.sharobi.restaurantapp.service.BillingService">
+		<property name="billingDAO" ref="billingDAO"></property>
+	</bean>
+	
+	<bean id="maintenenceJobService" class="com.sharobi.restaurantapp.service.MaintenenceJobService">
+		<property name="maintenenceJobDAO" ref="maintenenceJobDAO"></property>
+	</bean>
+
+	<bean id="storeAddressService" class="com.sharobi.restaurantapp.service.StoreAddressService">
+		<property name="storeAddressDAO" ref="storeAddressDAO"></property>
+	</bean>
+
+	<bean id="loginWebservice" class="com.sharobi.restaurantapp.webservice.impl.LoginWSImpl">
+		<property name="loginService" ref="loginService"></property>
+	</bean>
+
+	<bean id="profileWebservice" class="com.sharobi.restaurantapp.webservice.impl.ProfileWSImpl">
+		<property name="customerService" ref="customerService"></property>
+	</bean>
+
+	<bean id="menuWebservice" class="com.sharobi.restaurantapp.webservice.impl.MenuWSImpl">
+		<property name="menuService" ref="menuService"></property>
+	</bean>
+
+	<bean id="licenseWSImpl" class="com.sharobi.restaurantapp.webservice.impl.LicenseWSImpl">
+		<property name="licenseService" ref="licenseService"></property>
+	</bean>
+
+	<bean id="daysSpecialWSImpl"
+		class="com.sharobi.restaurantapp.webservice.impl.DaysSpecialWSImpl">
+		<property name="specialService" ref="specialService"></property>
+	</bean>
+	<bean id="specialWSImpl" class="com.sharobi.restaurantapp.webservice.impl.SpecialWSImpl">
+		<property name="specialsDAO" ref="specialsDAO"></property>
+	</bean>
+
+	<bean id="feedbackWSImpl"
+		class="com.sharobi.restaurantapp.webservice.impl.FeedbackWSImpl">
+		<property name="feedbackService" ref="feedbackService"></property>
+	</bean>
+
+	<bean id="inventoryWSImpl"
+		class="com.sharobi.restaurantapp.webservice.impl.InventoryWSImpl">
+		<property name="inventoryService" ref="inventoryService"></property>
+	</bean>
+	
+	<bean id="humanResourceWSImpl"
+		class="com.sharobi.restaurantapp.webservice.impl.HumanResourceWSImpl">
+		<property name="humanResourceService" ref="humanResourceService"></property>
+	</bean>
+
+	<bean id="recipeManagementWSImpl"
+		class="com.sharobi.restaurantapp.webservice.impl.RecipeManagementWSImpl">
+		<property name="recipeManagementService" ref="recipeManagementService"></property>
+	</bean>
+
+	<bean id="orderWSImpl" class="com.sharobi.restaurantapp.webservice.impl.OrderWSImpl">
+		<property name="orderService" ref="orderService"></property>
+		<property name="storeAddressService" ref="storeAddressService"></property>
+	</bean>
+
+	<bean id="accountWSImpl" class="com.sharobi.restaurantapp.webservice.impl.AccountWSImpl">
+		<property name="accountService" ref="accountService"></property>
+
+	</bean>
+
+	<bean id="billingWSImpl" class="com.sharobi.restaurantapp.webservice.impl.BillingWSImpl">
+		<property name="billingService" ref="billingService"></property>
+	</bean>
+	
+	<bean id="maintenenceJobWSImpl" class="com.sharobi.restaurantapp.webservice.impl.MaintenenceJobWSImpl">
+		<property name="maintenenceJobService" ref="maintenenceJobService"></property>
+	</bean>
+
+	<bean id="storeLocatorWSImpl"
+		class="com.sharobi.restaurantapp.webservice.impl.StoreLocatorWSImpl">
+		<property name="storeAddressService" ref="storeAddressService"></property>
+	</bean>
+	-->
+
+	<!-- Dependency injections for Sharobitech Admin -->
+	<!-- dao injections -->
+	<!--
+	<bean id="stUserDAO" class="com.sharobi.restaurantapp.dao.StUserDAOImpl" />
+	-->
+
+	<!-- Service injections -->
+	<!--
+	<bean id="stUserService" class="com.sharobi.restaurantapp.service.StUserService">
+		<property name="stUserDAO" ref="stUserDAO"></property>
+	</bean>
+	-->
+	
+	<!-- model injections -->
+	<!--
+	<bean id="stUser" class="com.sharobi.restaurantapp.model.StUser">
+		<property name="restMaster" ref="restaurantMaster"></property>
+	</bean>
+	-->
+	
+	<!-- Added by chanchalN for Delivery boy -->
+	<!--
+	<bean id="deliveryBoyDAO" class="com.sharobi.restaurantapp.dao.DeliveryBoyDAOImpl">
+	</bean>
+	<bean id="deliveryBoyService" class="com.sharobi.restaurantapp.service.DeliveryBoyService">
+		<property name="deliveryBoyDAO" ref="deliveryBoyDAO"></property>
+	</bean>
+	<bean id="deliveryBoyWSImpl" class="com.sharobi.restaurantapp.webservice.impl.DeliveryBoyWSImpl">
+		<property name="deliveryBoyService" ref="deliveryBoyService"></property>
+	</bean>
+	-->
+	
+	<!-- Added by chanchalN for Room Booking Module -->	
+	<!-- Room Book Start-->
+	<!-- KK
+	<bean id="amenitiesDAO" class=" com.sharobi.restaurantapp.dao.roombook.AmenitiesDAOImpl">
+	</bean>
+	
+	<bean id="amenitiesService" class="com.sharobi.restaurantapp.service.roombook.AmenitiesService">
+		<property name="amenitiesDAO" ref="amenitiesDAO"></property>
+	</bean>
+
+	<bean id="amenitiesWebservice" class="com.sharobi.restaurantapp.webservice.roombook.impl.AmenitiesWSImpl">
+		<property name="amenitiesService" ref="amenitiesService"></property>
+	</bean>
+	
+	<bean id="CheckInOutDAO" class="  com.sharobi.restaurantapp.dao.roombook.CheckinOutDAOImpl">
+	</bean>
+	<bean id="checkInOutService" class="com.sharobi.restaurantapp.service.roombook.CheckInOutService">
+		<property name="CheckInOutDAO" ref="CheckInOutDAO"></property>
+	</bean>
+	<bean id="checkinOutWebservice" class="com.sharobi.restaurantapp.webservice.roombook.impl.CheckInOutWSImpl">
+		<property name="checkInOutService" ref="checkInOutService"></property>
+	</bean>
+	
+	<bean id="taxForRoomBookDAO" class="com.sharobi.restaurantapp.dao.roombook.TaxForRoomBookDAOImpl">
+	</bean>
+	<bean id="taxForRoomBookingService" class="com.sharobi.restaurantapp.service.roombook.TaxForRoomBookingService">
+		<property name="taxForRoomBookDAO" ref="taxForRoomBookDAO"></property>
+	</bean>
+	<bean id="taxForRoomBookWebservice" class=" com.sharobi.restaurantapp.webservice.roombook.impl.TaxForRoomBookWSImpl">
+		<property name="taxForRoomBookingService" ref="taxForRoomBookingService"></property>
+	</bean>
+	
+	<bean id="countryDAO" class="com.sharobi.restaurantapp.dao.roombook.CountryDAOImpl">
+	</bean>
+	<bean id="countryService" class="com.sharobi.restaurantapp.service.roombook.CountryService">
+		<property name="countryDAO" ref="countryDAO"></property>
+	</bean>
+	<bean id="countryWebservice" class=" com.sharobi.restaurantapp.webservice.roombook.impl.CountryWSImpl">
+		<property name="countryService" ref="countryService"></property>
+	</bean>
+	
+	<bean id="roomTypeDAO" class="com.sharobi.restaurantapp.dao.roombook.RoomTypeDAOImpl">
+	</bean>
+	<bean id="roomTypeService" class="com.sharobi.restaurantapp.service.roombook.RoomTypeService">
+		<property name="roomTypeDAO" ref="roomTypeDAO"></property>
+	</bean>
+	<bean id="roomTypeWebservice" class="com.sharobi.restaurantapp.webservice.roombook.impl.RoomTypeWSImpl">
+		<property name="roomTypeService" ref="roomTypeService"></property>
+	</bean>
+	
+	<bean id="roomDAO" class="com.sharobi.restaurantapp.dao.roombook.RoomDAOImpl">
+	</bean>
+	<bean id="roomService" class="com.sharobi.restaurantapp.service.roombook.RoomService">
+		<property name="roomDAO" ref="roomDAO"></property>
+	</bean>
+	<bean id="roomWebservice" class="com.sharobi.restaurantapp.webservice.roombook.impl.RoomWSImpl">
+		<property name="roomService" ref="roomService"></property>
+	</bean>
+	
+	<bean id="roomAmenitiesMapDAO" class="com.sharobi.restaurantapp.dao.roombook.RoomAmenitiesMapDAOImpl">
+	</bean>
+	<bean id="roomAmenitiesMapService" class="com.sharobi.restaurantapp.service.roombook.RoomAmenitiesMapService">
+		<property name="roomAmenitiesMapDAO" ref="roomAmenitiesMapDAO"></property>
+	</bean>
+	<bean id="roomAmenitiesMapWebservice" class="com.sharobi.restaurantapp.webservice.roombook.impl.RoomAmenitiesMapWSImpl">
+		<property name="roomAmenitiesMapService" ref="roomAmenitiesMapService"></property>
+	</bean>
+	
+	<bean id="roomServicesDAO" class="com.sharobi.restaurantapp.dao.roombook.RoomServicesDAOImpl">
+	</bean>
+	<bean id="room_Services_Service" class="com.sharobi.restaurantapp.service.roombook.Room_Services_Service">
+		<property name="roomServicesDAO" ref="roomServicesDAO"></property>
+	</bean>
+	<bean id="Room_ServiceWebservice" class="com.sharobi.restaurantapp.webservice.roombook.impl.Room_ServiceWSImpl">
+		<property name="room_Services_Service" ref="room_Services_Service"></property>
+	</bean>
+	
+	<bean id="roomStatusDAO" class="com.sharobi.restaurantapp.dao.roombook.RoomStatusDAOImpl">
+	</bean>
+	<bean id="roomStatusService" class="com.sharobi.restaurantapp.service.roombook.RoomStatusService">
+		<property name="roomStatusDAO" ref="roomStatusDAO"></property>
+	</bean>
+	<bean id="RoomStatusWebservice" class="com.sharobi.restaurantapp.webservice.roombook.impl.RoomStatusWSImpl">
+		<property name="roomStatusService" ref="roomStatusService"></property>
+	</bean>
+	-->
+	
+	<!--  Added by ChanchalN for Room search implementation -->
+	<!-- KK
+	<bean id="roomSearchDao" class="com.sharobi.restaurantapp.dao.roombook.RoomSearchDAOImpl">
+	</bean>
+	<bean id="roomSearchService" class="com.sharobi.restaurantapp.service.roombook.RoomSearchService">
+		<property name="roomSearchDao" ref="roomSearchDao"></property>
+	</bean>
+	<bean id="RoomSearchWebservice" class="com.sharobi.restaurantapp.webservice.roombook.impl.RoomSearchWSImpl">
+		<property name="roomSearchService" ref="roomSearchService"></property>
+	</bean>
+	-->
+	<!-- Room Book End-->
+	
+	
+	
+</beans>
